@@ -27,7 +27,6 @@ export const sendVerifactionEmail = async (email, verificationToken) => {
   }
 };
 
-// Function to replace placeholders
 function replacePlaceholders(template, data) {
   return template.replace(/{{(.*?)}}/g, (match, key) => data[key.trim()] || "");
 }
