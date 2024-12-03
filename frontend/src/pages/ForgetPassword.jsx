@@ -14,7 +14,7 @@ const ForgotPasswordPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const test = await forgotPassword(email);
-    console.log(test);
+    // console.log(test);
     // setIsSubmitted(true);
   };
 
