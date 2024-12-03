@@ -13,6 +13,7 @@ import {
 import { send } from "process";
 
 dotenv.config();
+console.log(process.env.CLIENT_URL);
 
 export const signup = async (req, res) => {
   const { email, password, name } = req.body;
@@ -153,7 +154,7 @@ export const forgetPassword = async (req, res) => {
     //send email
     await sendResetPasswordEmail(
       user.email,
-      `${process.env.CLIENT_URL}/forgetPassword/${resetToken}`
+      `${process.env.CLIENT_URL}/reset-password/${resetToken}`
     );
     res.status(200).json({
       success: true,
