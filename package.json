@@ -1,13 +1,15 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "backend/index.js",
   "dependencies": {
     "asynckit": "^0.4.0",
     "axios": "^1.7.7",
     "bcryptjs": "^2.4.3",
     "combined-stream": "^1.0.8",
     "cookie-parser": "^1.4.7",
+    "cords": "^1.0.4",
+    "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "delayed-stream": "^1.0.0",
     "dotenv": "^16.4.5",
@@ -23,7 +25,9 @@
     "proxy-from-env": "^1.1.0"
   },
   "scripts": {
-    "start": "nodemon index.js"
+    "dev": "NODE_ENV=development nodemon backend/index.js",
+    "start": "NODE_ENV=production node  backend/index.js",
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "type": "module",
   "author": "",

@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import { User } from "../models/user.model.js";
@@ -9,6 +11,8 @@ import {
   sendResetSuccessfulEmail,
 } from "../mailtrap/emails.js";
 import { send } from "process";
+
+dotenv.config();
 
 export const signup = async (req, res) => {
   const { email, password, name } = req.body;
@@ -187,4 +191,17 @@ export const resetPasssword = async (req, res) => {
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }
+};
+
+export const checkAuth = async (req, res) => {
+  const user = await User.findById(req.userId).select("-password");
+  if (!user) {
+    return res.status(400).json({ success: false, message: "User not found" });
+  }
+  res.status(200).json({
+    success: true,
+    user: {
+      ...user._doc,
+    },
+  });
 };
