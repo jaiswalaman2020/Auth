@@ -14,6 +14,18 @@ export const verifyToken = async (req, res, next) => {
     if (!decoded) {
       return res.status(401).json({ success: false, message: "Invalid token" });
     }
+
+    //check if user exists
+    const user = await User.findById(decoded.userId);
+    if (!user) {
+      return res
+        .status(401)
+        .json({ success: false, message: "user no longer exists" });
+    }
+
+    //check if user changed password after token was issued
+    
+
     console.log("decoded", decoded);
     req.userId = decoded.userId;
     next();
