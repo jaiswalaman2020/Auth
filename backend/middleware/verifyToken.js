@@ -24,7 +24,6 @@ export const verifyToken = async (req, res, next) => {
     }
 
     //check if user changed password after token was issued
-    
 
     console.log("decoded", decoded);
     req.userId = decoded.userId;

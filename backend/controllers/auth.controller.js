@@ -10,8 +10,6 @@ import {
   sendResetPasswordEmail,
   sendResetSuccessfulEmail,
 } from "../mailtrap/emails.js";
-import { send } from "process";
-
 dotenv.config();
 console.log(process.env.CLIENT_URL);
 
@@ -46,6 +44,16 @@ export const signup = async (req, res) => {
 
     await sendVerifactionEmail(user.email, verficationToken);
 
+    setTimeout(async () => {
+      const userToDelete = await User.findOne({ email, verficationToken });
+      if (userToDelete && !userToDelete.isVerified) {
+        await User.deleteOne({ _id: userToDelete._id });
+        console.log(
+          `User with email ${email} deleted due to failed verification`
+        );
+      }
+    }, 15 * 60 * 1000);
+
     res.status(201).json({
       success: true,
       message: "User created successfully",
@@ -68,7 +76,7 @@ export const login = async (req, res) => {
         .status(400)
         .json({ success: false, message: "provide email or password" });
     }
-    
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res
@@ -160,7 +168,7 @@ export const forgetPassword = async (req, res) => {
   }
 };
 
-export const resetPasssword = async (req, res) => {
+export const resetPassword = async (req, res) => {
   try {
     const { token } = req.params;
     const { password } = req.body;
