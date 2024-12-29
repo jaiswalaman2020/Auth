@@ -9,7 +9,14 @@ const EmailVerificationPage = () => {
   const inputRefs = useRef([]);
   const navigate = useNavigate();
 
-  const { error, isLoading, verifyEmail } = useAuthStore();
+  const { error, isLoading, verifyEmail, user } = useAuthStore();
+  useEffect(() => {
+    // Check if user is already authenticated and verified
+    // checkAuth();
+    if (user?.isVerified) {
+      navigate("/");
+    }
+  }, [user]);
 
   const handleChange = (index, value) => {
     const newCode = [...code];
@@ -60,6 +67,8 @@ const EmailVerificationPage = () => {
     if (code.every((digit) => digit !== "")) {
       handleSubmit(new Event("submit"));
     }
+
+    // Check if user is already authenticated
   }, [code]);
 
   return (

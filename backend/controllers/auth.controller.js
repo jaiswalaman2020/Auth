@@ -10,7 +10,7 @@ import {
   sendResetPasswordEmail,
   sendResetSuccessfulEmail,
 } from "../mailtrap/emails.js";
-dotenv.config();
+dotenv.config({ path: "../.env" });
 console.log(process.env.CLIENT_URL);
 
 export const signup = async (req, res) => {

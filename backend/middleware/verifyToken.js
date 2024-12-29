@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-dotenv.config();
+import { User } from "../models/user.model.js";
+
+dotenv.config({ path: "../.env" });
 
 export const verifyToken = async (req, res, next) => {
   const token = req.cookies.token;
@@ -23,12 +25,10 @@ export const verifyToken = async (req, res, next) => {
         .json({ success: false, message: "user no longer exists" });
     }
 
-    //check if user changed password after token was issued
-
-    console.log("decoded", decoded);
+    // console.log("decoded", decoded);
     req.userId = decoded.userId;
     next();
   } catch (error) {
-    return res.status(501).json({ success: false, message: "Server Error" });
+    return res.status(501).json({ success: false, message: "Serverss Error" });
   }
 };
