@@ -4,6 +4,10 @@ import path from "path";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import { connect } from "./db/connection.js";
+import session from "express-session";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import Passport from "passport";
+
 import authRoutes from "./routes/auth.route.js";
 
 dotenv.config({ path: "../.env" });
@@ -19,8 +23,40 @@ app.use(
     credentials: true,
   })
 );
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+app.use(Passport.initialize());
+app.use(Passport.session());
+
+Passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "http://localhost:8000/api/auth/google/callback",
+      scope: ["profile"],
+    },
+
+    (accessToken, refreshToken, profile, done) => {
+      return done(null, profile);
+    }
+  )
+);
+
+Passport.serializeUser((user, done) => done(null, user));
+Passport.deserializeUser((user, done) => done(null, user));
 
 app.use("/api/auth", authRoutes);
+app.get("/profile", (req, res) => {
+  res.send(req.user);
+});
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/frontend/dist")));
   app.get("*", (req, res) => {
