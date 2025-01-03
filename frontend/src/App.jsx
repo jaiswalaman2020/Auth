@@ -13,6 +13,8 @@ import LoadingSpinner from "./components/LoadingSpinner";
 import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/authStore";
 import { useEffect } from "react";
+import google from "./pages/google";
+import Google from "./pages/google";
 
 // protect routes that require authentication
 const ProtectedRoute = ({ children }) => {
@@ -102,6 +104,7 @@ function App() {
           }
         />
         <Route path="/verify-email" element={<EmailVerificationPage />} />
+        <Route path="/google" element={<Google />} />
         <Route
           path="/forgot-password"
           element={
