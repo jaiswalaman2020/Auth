@@ -22,7 +22,7 @@ export const sendVerifactionEmail = async (email, verificationToken) => {
     });
     // console.log("email sent", response);
   } catch (error) {
-    console.erroe(error);
+    console.error(error);
     throw new Error(`Failed to send email: ${error.message}`);
   }
 };

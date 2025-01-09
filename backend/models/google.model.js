@@ -19,6 +19,10 @@ const googleSchema = new mongoose.Schema(
     profilePic: {
       type: String,
     },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
