@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PasswordStrengthMeter from "../components/passwordStrength";
 import { useAuthStore } from "../store/authStore";
+// import Google from "./google";
 
 const SignUpPage = () => {
   const [name, setName] = useState("");
@@ -79,6 +80,7 @@ const SignUpPage = () => {
             )}
           </motion.button>
         </form>
+        {/* <Google /> */}
       </div>
       <div className="px-8 py-4 bg-gray-900 bg-opacity-50 flex justify-center">
         <p className="text-sm text-gray-400">

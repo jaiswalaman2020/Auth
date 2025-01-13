@@ -83,7 +83,7 @@ export const useAuthStore = create((set) => ({
         isAuthenticated: true,
         isLoading: false,
       });
-      return response.data;
+      // return response.data;
     } catch (error) {
       set({
         error: error.response.data.message || "Error verifying email",
@@ -102,7 +102,11 @@ export const useAuthStore = create((set) => ({
         isCheckingAuth: false,
       });
     } catch (error) {
-      set({ error: null, isCheckingAuth: false, isAuthenticated: false });
+      set({
+        error: error.message,
+        isCheckingAuth: false,
+        isAuthenticated: false,
+      });
     }
   },
   forgotPassword: async (email) => {
