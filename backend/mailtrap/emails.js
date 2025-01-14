@@ -51,14 +51,14 @@ function replacePlaceholders(template, data) {
 
 export const sendWelcomeEmail = async (email, name) => {
   // const recipient = [{ email }];
-  // const data = {
-  //   companyName: "Awesome Inc.",
-  //   userName: name,
-  //   ctaLink: "https://www.awesome-inc.com/get-started",
-  //   year: new Date().getFullYear(),
-  //   companyAddress: "123 Awesome Street, Awesome City",
-  //   contactInfo: "contact@awesome-inc.com",
-  // };
+  const data = {
+    companyName: "Awesome Inc.",
+    userName: name,
+    ctaLink: "https://www.awesome-inc.com/get-started",
+    year: new Date().getFullYear(),
+    companyAddress: "123 Awesome Street, Awesome City",
+    contactInfo: "contact@awesome-inc.com",
+  };
 
   const renderedTemplate = replacePlaceholders(WELCOME_EMAIL_TEMPLATE, data);
 

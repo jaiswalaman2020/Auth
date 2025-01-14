@@ -1,13 +1,19 @@
 import { motion } from "framer-motion";
 import { useAuthStore } from "../store/authStore";
 import { formatDate } from "../utils/dats";
+import { useEffect } from "react";
 
 const DashboardPage = () => {
-  const { user, logout } = useAuthStore();
+  const { user, logout, isAuthenticated } = useAuthStore();
 
   const handleLogout = () => {
     logout();
   };
+  useEffect(() => {
+    if (!user || !isAuthenticated) {
+      navigate("/login");
+    }
+  }, []);
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}

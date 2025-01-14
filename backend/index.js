@@ -7,7 +7,6 @@ import { connect } from "./db/connection.js";
 import session from "express-session";
 import Passport from "passport";
 import { Strategy } from "./utils/googleAuth.js";
-
 import authRoutes from "./routes/auth.route.js";
 
 dotenv.config({ path: "../.env" });
@@ -28,9 +27,9 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: { maxAge: 600000 }, // 10 minutes
   })
 );
-
 app.use(Passport.initialize());
 app.use(Passport.session());
 

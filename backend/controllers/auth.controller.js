@@ -59,6 +59,8 @@ export const signup = async (req, res) => {
 };
 export const verifyEmail = async (req, res) => {
   const { code } = req.body;
+  console.log("code", code);
+  console.log("req.session.tempUser", req.session.tempUser);
   try {
     const tempUser = req.session.tempUser;
     if (!tempUser) {
@@ -113,6 +115,7 @@ export const verifyEmail = async (req, res) => {
     });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
+    console.log("Error in verifyEmail ", error);
   }
 };
 

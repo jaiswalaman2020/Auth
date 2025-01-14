@@ -25,6 +25,10 @@ const SignUpPage = () => {
       console.log(error);
     }
   };
+
+  function googlelogin() {
+    window.location.href = "http://localhost:8000/api/auth/google";
+  }
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -37,7 +41,6 @@ const SignUpPage = () => {
         <h2 className="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-green-400 to-emerald-500 text-transparent bg-clip-text">
           Create Account
         </h2>
-
         <form onSubmit={handleSignUp}>
           <Input
             icon={User}
@@ -79,8 +82,15 @@ const SignUpPage = () => {
               "Sign Up"
             )}
           </motion.button>
+
+          {/* button for sign up with google */}
         </form>
-        {/* <Google /> */}
+        <motion.button
+          className="mt-5 w-full py-3 px-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg shadow-lg hover:from-green-600 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition duration-200"
+          onClick={googlelogin}
+        >
+          Sign Up with Google
+        </motion.button>{" "}
       </div>
       <div className="px-8 py-4 bg-gray-900 bg-opacity-50 flex justify-center">
         <p className="text-sm text-gray-400">

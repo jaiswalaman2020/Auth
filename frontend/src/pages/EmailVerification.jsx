@@ -13,6 +13,8 @@ const EmailVerificationPage = () => {
   useEffect(() => {
     // Check if user is already authenticated and verified
     // checkAuth();
+    console.log("User state:", user);
+
     if (user?.isVerified) {
       navigate("/");
     }
@@ -55,10 +57,12 @@ const EmailVerificationPage = () => {
     const verificationCode = code.join("");
     try {
       await verifyEmail(verificationCode);
-      navigate("/");
       toast.success("Email verified successfully");
+
+      navigate("/");
     } catch (error) {
       console.log(error);
+      toast.error(error?.response?.data?.message || "Error verifying email");
     }
   };
 
