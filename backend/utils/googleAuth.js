@@ -1,9 +1,9 @@
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import Passport from "passport";
 import dotenv from "dotenv";
 dotenv.config({ path: "../.env" });
 
-import { Google } from "../models/google.model.js";
+// import { Google } from "../models/google.model.js";
+import { User } from "../models/user.model";
 export const Strategy = new GoogleStrategy(
   {
     clientID: process.env.GOOGLE_CLIENT_ID,
@@ -14,7 +14,7 @@ export const Strategy = new GoogleStrategy(
 
   async function verify(accessToken, refreshToken, profile, done) {
     try {
-      let googleUser = await Google.findOne({ googleId: profile.id });
+      let googleUser = await User.findOne({ googleId: profile.id });
       if (!googleUser) {
         let newUser = new Google({
           googleId: profile.id,
@@ -22,6 +22,7 @@ export const Strategy = new GoogleStrategy(
           name: profile.displayName,
           profilePic: profile.photos[0].value,
           isVerified: profile.emails[0].verified,
+          authType: "google",
         });
         await newUser.save();
         return done(null, newUser);

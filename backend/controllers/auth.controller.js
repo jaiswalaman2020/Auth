@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import { User } from "../models/user.model.js";
-import { Google } from "../models/google.model.js";
+// import { Google } from "../models/google.model.js";
 import { generateTokenAndSetCookie } from "../utils/ generateTokenAndSetCookie.js";
 import {
   sendVerifactionEmail,
@@ -81,7 +81,7 @@ export const verifyEmail = async (req, res) => {
     }
 
     // Hash password after successful verification
-    const hashpassword = await bcrypt.hash(tempUser.password, 10);
+    // const hashpassword = await bcrypt.hash(tempUser.password, 10);
 
     const existingUser = await User.findOne({ email: tempUser.email });
     if (existingUser) {
@@ -93,9 +93,10 @@ export const verifyEmail = async (req, res) => {
 
     const user = new User({
       email: tempUser.email,
-      password: hashpassword,
+      password: tempUser.password,
       name: tempUser.name,
       isVerified: true,
+      authType: "jwt",
     });
 
     await user.save();
@@ -129,7 +130,7 @@ export const login = async (req, res) => {
         .json({ success: false, message: "provide email or password" });
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = User.comparePassword(user.password);
     if (!isPasswordValid) {
       return res
         .status(400)
@@ -233,7 +234,7 @@ export const resetPassword = async (req, res) => {
 export const checkAuth = async (req, res) => {
   let user;
   if (req.userType === "google") {
-    user = await Google.findById(req.userId);
+    user = await User.findById(req.userId);
   } else {
     user = await User.findById(req.userId);
     if (!user) {

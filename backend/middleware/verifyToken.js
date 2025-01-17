@@ -97,7 +97,7 @@ export const verifyToken = async (req, res, next) => {
   // 1. Check for session (Google login)
   if (req.isAuthenticated && req.isAuthenticated()) {
     try {
-      const googleUser = await Google.findOne({ googleId: req.user.googleId });
+      const googleUser = await User.findOne({ googleId: req.user.googleId });
       console.log("googleUser", googleUser);
       if (!googleUser) {
         return res
