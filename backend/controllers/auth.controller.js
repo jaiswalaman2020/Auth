@@ -11,7 +11,6 @@ import {
   sendResetPasswordEmail,
   sendResetSuccessfulEmail,
 } from "../mailtrap/emails.js";
-import path from "path";
 dotenv.config({ path: "../.env" });
 // console.log(process.env.CLIENT_URL);
 export const signup = async (req, res) => {
@@ -130,7 +129,7 @@ export const login = async (req, res) => {
         .json({ success: false, message: "provide email or password" });
     }
 
-    const isPasswordValid = User.comparePassword(user.password);
+    const isPasswordValid = await user.comparePassword(password);
     if (!isPasswordValid) {
       return res
         .status(400)
@@ -181,6 +180,11 @@ export const forgetPassword = async (req, res) => {
       return res
         .status(400)
         .json({ success: false, message: "User not found" });
+    }
+    if (user.authType === "google") {
+      return res
+        .status(400)
+        .json({ success: false, message: "User is registered with google" });
     }
     //genrate reset token
     const resetToken = crypto.randomBytes(20).toString("hex");

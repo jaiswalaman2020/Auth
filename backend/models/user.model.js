@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
-import isEmail from "validator/lib/isEmail";
+import isEmail from "validator/lib/isEmail.js";
 
 const userSchema = new mongoose.Schema(
   {
@@ -51,19 +51,11 @@ const userSchema = new mongoose.Schema(
     resetPasswordExpiresAt: {
       type: Date,
     },
-    // otp: {
-    //   code: {
-    //     type: String,
-    //   },
-    //   expiresAt: {
-    //     type: Date,
-    //   },
-    // },
   },
   { timestamps: true }
 );
+//index set to 1 to make query faster 1 means ascending order
 
-export const User = mongoose.model("User", userSchema);
 userSchema.index({ googleId: 1 });
 userSchema.index({ email: 1 });
 
@@ -76,6 +68,8 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-userSchema.methods.comparePassword = async function (candidatePassword) {
-  return await bcrypt.compare(candidatePassword, this.password);
+userSchema.methods.comparePassword = function (candidatePassword) {
+  return bcrypt.compare(candidatePassword, this.password);
 };
+
+export const User = mongoose.model("User", userSchema);

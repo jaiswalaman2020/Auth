@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { User } from "../models/user.model.js";
-import { Google } from "../models/google.model.js";
 
 dotenv.config({ path: "../.env" });
 
