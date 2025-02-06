@@ -1,6 +1,8 @@
 import React from "react";
 
-const API_BASE_URL = "http://localhost:8000/api/auth/google";
+const API_BASE_URL =
+  "https://auth-15v2.onrender.com/api/auth/google/callback" ||
+  "http://localhost:8000/api/auth/google";
 
 export default function Google() {
   function google() {
