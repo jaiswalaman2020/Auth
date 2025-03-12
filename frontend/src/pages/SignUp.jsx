@@ -27,9 +27,7 @@ const SignUpPage = () => {
   };
 
   function googlelogin() {
-    window.location.href =
-      "https://auth-15v2.onrender.com/api/auth/google/callback" ||
-      "http://localhost:8000/api/auth/google";
+    window.location.href = "http://localhost:8000/api/auth/google";
   }
   return (
     <motion.div
